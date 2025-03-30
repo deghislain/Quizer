@@ -25,17 +25,22 @@ example_response = """
 """
 
 
-def get_qa_system_prompt():
+def get_prompt(text_document, topic, number):
     return f""" 
-            You are a Subject Mater Expert in multiple domain knowledge. Given a text document and not prior knowledge.
-            Your task is to generate a provided number of questions with answers.
-            The instructions for this task are as follow:
-            All generated questions must come from the provided text document content.
-            You will return a response in json format. Each question must have 3 answers in the multiple choice question style.
-            Only one response shall be correct. The correct answer shall be labeled as solution.
+        The following text document is about: {topic}.
+        ---------------------
+        {text_document}
+        ---------------------
+       You are a Cross-Disciplinary Subject Matter Expert with extensive knowledge spanning multiple domains. Given the 
+       text document and not prior knowledge.
+        Your task is to generate a list of {number} questions with answers.
+        The instructions for this task are as follow:
+        All generated questions must come from the provided text document content.
+        You will return a response in json format. Each question must have 3 answers in the multiple choice question style.
+        Only one response shall be correct. The correct answer shall be labeled as solution.
 
-            Here are some examples of questions with their respective answers and solutions in json schema:
+        Here are some examples of questions with their respective answers and solutions in json schema:
 
-            {example_response}
+        {example_response}
 
-    """
+"""

@@ -1,12 +1,13 @@
 import streamlit as st
 from document_helper import PDFVectorDBLoader
 from langchain_openai import ChatOpenAI
-from qa_prompt import get_qa_system_prompt
+from qa_prompt import get_prompt
 from langchain.schema import SystemMessage, HumanMessage
 import logging
+import time
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-llm = ChatOpenAI(model="granite3-dense:latest", temperature=0, base_url="http://localhost:11434/v1", api_key="ollama")
+llm = ChatOpenAI(model="granite3-dense:8b", temperature=0, base_url="http://localhost:11434/v1", api_key="ollama")
 
 
 def load_document():
@@ -26,12 +27,14 @@ def load_document():
 def generate_questions(pdf_text_content: str, topic: str, number: str):
     question_json = ""
     if pdf_text_content:
-        query = f"Given the following content about {topic}: {pdf_text_content}, generate a list of {number} with answers"
-        messages = [
-            SystemMessage(content=get_qa_system_prompt()),
-            HumanMessage(content=query)
-        ]
-        question_json = llm.invoke(messages).content.strip()
+        query = get_prompt(pdf_text_content, topic, number)
+        message = HumanMessage(content=query)
+        current_time_seconds_start = time.time()
+        question_json = llm.invoke([message]).content.strip()
+        current_time_seconds_End = time.time()
+        duration = current_time_seconds_End - current_time_seconds_start
+        logging.info(f"Model Response Time: {duration}")
+        logging.info(f"*****************************Generated question: {question_json}")
     return question_json
 
 
