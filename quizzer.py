@@ -2,12 +2,13 @@ import streamlit as st
 from document_helper import PDFVectorDBLoader
 from langchain_openai import ChatOpenAI
 from qa_prompt import get_prompt
-from langchain.schema import SystemMessage, HumanMessage
+from langchain.schema import HumanMessage
+from q_a_helper import create_test
 import logging
 import time
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-llm = ChatOpenAI(model="granite3-dense:8b", temperature=0, base_url="http://localhost:11434/v1", api_key="ollama")
+llm = ChatOpenAI(model="granite3-dense:latest", temperature=0, base_url="http://localhost:11434/v1", api_key="ollama")
 
 
 def load_document():
@@ -46,5 +47,6 @@ if __name__ == "__main__":
         if topic and number:
             question_json = generate_questions(pdf_text_content, topic, str(number))
             logging.info(f"Generated question: {question_json}")
-
+            test = create_test(question_json)
+            logging.info("Test successfully created")
             st.write(question_json)
