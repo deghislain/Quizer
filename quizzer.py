@@ -33,7 +33,7 @@ def generate_questions(pdf_text_content: str, topic: str, number: str):
         question_json = llm.invoke([message]).content.strip()
         current_time_seconds_End = time.time()
         duration = current_time_seconds_End - current_time_seconds_start
-        logging.info(f"Model Response Time: {duration}")
+        logging.info(f"Model Response Time in seconds: {duration}")
         logging.info(f"*****************************Generated question: {question_json}")
     return question_json
 
