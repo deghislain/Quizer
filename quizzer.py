@@ -55,7 +55,8 @@ if __name__ == "__main__":
         btn_submit = st.button("Submit")
         if btn_submit and topic and number:
             question_json = generate_questions(pdf_text_content, topic, str(number))
-            logging.info(f"Generated question: {question_json}")
-            test = create_test(question_json)
-            logging.info("Test successfully created")
+            if question_json:
+                logging.info(f"Generated question: {question_json}")
+                test = create_test(question_json)
+                logging.info("Test successfully created")
             st.write(question_json)

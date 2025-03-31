@@ -21,13 +21,13 @@ class Question:
 
 
 class Test:
-    def __init__(self, json_questions: str):
+    def __init__(self, string_questions: str):
         """
         Initializes the Test class with the path to a JSON file containing questions and answers.
 
-        :param json_questions: Path to the JSON file containing the questions and answers.
+        :param string_questions: Path to the JSON file containing the questions and answers.
         """
-        self.json_file_path = json_questions
+        self.string_questions = string_questions
         self.test_questions: List[Question] = []
 
     def _process_questions(self, json_questions: List[dict]) -> List[Question]:
@@ -41,15 +41,10 @@ class Test:
 
         for question_data in json_questions:
             question_text = question_data["question"]
-            answers = {
-                "A": question_data.get("answer_A", ""),
-                "B": question_data.get("answer_B", ""),
-                "C": question_data.get("answer_C", ""),
-                "solution": question_data.get("solution", "")
-            }
+            answers = question_data["answers"]
 
             answer_obj = Answer(choice_one=answers["A"], choice_two=answers["B"], choice_three=answers["C"],
-                                solution=answers["solution"])
+                                solution=question_data["solution"])
             question_obj = Question(question=question_text, answers=answer_obj)
             processed_questions.append(question_obj)
 
@@ -61,8 +56,7 @@ class Test:
 
         :return: List of Question objects.
         """
-        json_questions = json.loads(self.json_file_path)
-        return self._process_questions(json_questions)
+        return self._process_questions(json.loads(self.string_questions))
 
 
 def create_test(json_questions: str) -> Test:
