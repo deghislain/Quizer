@@ -73,4 +73,3 @@ class PDFVectorDBLoader:
         """
         logging.info("Calling get_pdf_content method")
         return self._extract_text_from_pdf()
-

@@ -38,6 +38,7 @@ def get_prompt(text_document, topic, number):
         All generated questions must come from the provided text document content.
         You will return a response in json format. Each question must have 3 answers in the multiple choice question style.
         Only one response shall be correct. The correct answer shall be labeled as solution.
+       
 
         Here are some examples of questions with their respective answers and solutions in json schema:
 

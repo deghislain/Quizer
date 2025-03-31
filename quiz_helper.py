@@ -30,20 +30,6 @@ class Test:
         self.json_file_path = json_questions
         self.test_questions: List[Question] = []
 
-    def _load_json_file(self) -> List[dict]:
-        """
-        Loads and parses the JSON content from the file.
-
-        :return: List of question dictionaries from the JSON file.
-        """
-        try:
-            with open(self.json_file_path, 'r') as json_file:
-                json_content = json.load(json_file)
-            return json_content["questions"]
-        except Exception as e:
-            logging.error(f"Error loading JSON from file: {e}")
-            return []
-
     def _process_questions(self, json_questions: List[dict]) -> List[Question]:
         """
         Processes the list of question dictionaries into a list of Question objects.
@@ -75,7 +61,7 @@ class Test:
 
         :return: List of Question objects.
         """
-        json_questions = self._load_json_file()
+        json_questions = json.loads(self.json_file_path)
         return self._process_questions(json_questions)
 
 
