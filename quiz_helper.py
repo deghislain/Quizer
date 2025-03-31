@@ -79,4 +79,4 @@ def create_test(json_questions: str) -> Test:
 
     except Exception as e:
         logging.error(f"Error creating test: {e}")
-        return Test([])  # Return an empty Test object in case of failure
+        return Test("")  # Return an empty Test object in case of failure

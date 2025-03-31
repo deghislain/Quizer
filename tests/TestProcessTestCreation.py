@@ -1,6 +1,6 @@
 import unittest
 import logging
-from quiz_helper import Test, Answer, Question
+from quiz_helper import Test, Answer, Question, create_test
 from test_utils import string_questions, invalid_format_questions, invalid_questions_structure
 
 
@@ -53,4 +53,32 @@ class TestProcessTestCreation(unittest.TestCase):
         generated_questions = test.generate_questions()
 
         self.assertEqual(generated_questions, list_questions)
+
+    def test_create_test_correct_input(self):
+        list_questions = []
+        test = Test(string_questions)
+        answer = Answer(choice_one='responseA', choice_two='responseB', choice_three='responseC', solution='A')
+        question = Question(answers=answer, question='What are large language models?')
+
+        list_questions.append(question)
+
+        test.test_questions = list_questions
+
+        created_test = create_test(string_questions)
+
+        self.assertEqual(test.test_questions, created_test.test_questions)
+
+    def test_create_test_incorrect_input(self):
+        list_questions = []
+        test = Test(invalid_format_questions)
+
+        test.test_questions = list_questions
+
+        created_test = create_test(invalid_format_questions)
+
+        self.assertEqual(test.test_questions, created_test.test_questions)
+
+
+
+
 
