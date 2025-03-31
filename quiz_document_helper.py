@@ -26,17 +26,51 @@ def load_document():
 
 
 class PDFVectorDBLoader:
-    def __init__(self, pdf_file):
-        self.pdf_file = pdf_file
+    """
+           A class designed to extract text content from PDF documents.
 
-    def _extract_text_from_pdf(self):
+           This class leverages the PyPDF2 library to read and extract text from PDF files.
+           """
+
+    def __init__(self, pdf_file_path: str):
+        """
+        Initializes the PDFVectorDBLoader instance with a PDF file path.
+
+        :param pdf_file_path: Path to the PDF file.
+        """
+        self.pdf_file_path = pdf_file_path
+        logging.debug("PDFVectorDBLoader initialized with file path: %s", self.pdf_file_path)
+
+    def _extract_text_from_pdf(self) -> str:
+        """
+        Internal method to extract text from the PDF file.
+
+        :return: Extracted text content as a string.
+        """
+        if not self.pdf_file_path:
+            logging.warning("No PDF file path provided. Returning empty string.")
+            return ""
+
         logging.info("************In _extract_text_from_pdf: Extracting the content of the pdf")
-        text = ""
-        if self.pdf_file is not None:
-            reader = PdfReader(self.pdf_file)
-            for page in reader.pages:
-                text = text + page.extract_text()
+        try:
+            text = ""
+            if self.pdf_file_path is not None:
+                reader = PdfReader(self.pdf_file_path)
+                for page in reader.pages:
+                    text = text + page.extract_text()
+
+        except Exception as e:
+            logging.error(f"Error extracting text from PDF: {e}")
+            return ""
+
         return text
 
-    def get_pdf_content(self):
+    def get_pdf_content(self) -> str:
+        """
+        Retrieves and returns the text content of the PDF file.
+
+        :return: Text content of the PDF as a string.
+        """
+        logging.info("Calling get_pdf_content method")
         return self._extract_text_from_pdf()
+
