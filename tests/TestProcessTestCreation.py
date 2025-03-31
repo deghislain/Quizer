@@ -1,22 +1,7 @@
-import json
 import unittest
 import logging
 from quiz_helper import Test, Answer, Question
-
-string_questions = """
- [
-        {
-            "question": "What are large language models?",
-            "answers": {
-                "A": "responseA",
-                "B": "responseB",
-                "C": "responseC"
-            },
-            "solution": "A"
-        }
-]
-
-"""
+from test_utils import string_questions, invalid_format_questions, invalid_questions_structure
 
 
 class TestProcessTestCreation(unittest.TestCase):
@@ -53,6 +38,19 @@ class TestProcessTestCreation(unittest.TestCase):
 
         self.assertEqual(generated_questions, list_questions)
 
+    def test_generate_questions_invalid_json_format(self):
+        list_questions = []
+        test = Test(invalid_format_questions)
 
+        generated_questions = test.generate_questions()
 
+        self.assertEqual(generated_questions, list_questions)
+
+    def test_generate_questions_invalid_json_missing_solution(self):
+        list_questions = []
+        test = Test(invalid_questions_structure)
+
+        generated_questions = test.generate_questions()
+
+        self.assertEqual(generated_questions, list_questions)
 

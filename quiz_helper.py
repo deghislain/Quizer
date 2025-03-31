@@ -56,7 +56,13 @@ class Test:
 
         :return: List of Question objects.
         """
-        return self._process_questions(json.loads(self.string_questions))
+        try:
+            json_questions = self._process_questions(json.loads(self.string_questions))
+        except Exception as e:
+            logging.error(f"Error creating test: {e}")
+            return []
+
+        return json_questions
 
 
 def create_test(json_questions: str) -> Test:
