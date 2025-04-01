@@ -78,6 +78,16 @@ class TestProcessTestCreation(unittest.TestCase):
 
         self.assertEqual(test.test_questions, created_test.test_questions)
 
+    def test_create_test_incorrect_json_input_structure(self):
+        list_questions = []
+        test = Test(invalid_questions_structure)
+
+        test.test_questions = list_questions
+
+        created_test = create_test(invalid_questions_structure)
+
+        self.assertEqual(test.test_questions, created_test.test_questions)
+
 
 
 
