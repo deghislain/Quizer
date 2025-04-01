@@ -25,7 +25,7 @@ class Test:
         """
         Initializes the Test class with the path to a JSON file containing questions and answers.
 
-        :param string_questions: Path to the JSON file containing the questions and answers.
+        :param string_questions: json string containing the questions and answers.
         """
         self.string_questions = string_questions
         self.test_questions: List[Question] = []
