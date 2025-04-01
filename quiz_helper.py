@@ -30,21 +30,22 @@ class Test:
         self.string_questions = string_questions
         self.test_questions: List[Question] = []
 
-    def _process_questions(self, json_questions: List[dict]) -> List[Question]:
+    def _process_questions(self) -> List[Question]:
+        logging.info("_process_questions*********************START")
         """
         Processes the list of question dictionaries into a list of Question objects.
-
-        :param json_questions: List of question dictionaries.
         :return: List of Question objects.
         """
         processed_questions = []
-
-        for question_data in json_questions:
+        json_questions = json.loads(self.string_questions)
+        questions = json_questions["questions"]
+        for question_data in questions:
             question_text = question_data["question"]
             answers = question_data["answers"]
 
-            answer_obj = Answer(choice_one=answers["A"], choice_two=answers["B"], choice_three=answers["C"],
+            answer_obj = Answer(choice_one=answers[0], choice_two=answers[1], choice_three=answers[2],
                                 solution=question_data["solution"])
+
             question_obj = Question(question=question_text, answers=answer_obj)
             processed_questions.append(question_obj)
 
@@ -57,7 +58,7 @@ class Test:
         :return: List of Question objects.
         """
         try:
-            json_questions = self._process_questions(json.loads(self.string_questions))
+            json_questions = self._process_questions()
         except Exception as e:
             logging.error(f"Error creating test: {e}")
             return []

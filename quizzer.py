@@ -8,7 +8,7 @@ import logging
 import time
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-llm = ChatOpenAI(model="granite3-dense:latest", temperature=0, base_url="http://localhost:11434/v1", api_key="ollama")
+llm = ChatOpenAI(model="granite3.1-dense:2b", temperature=0, base_url="http://localhost:11434/v1", api_key="ollama")
 
 
 def generate_questions(pdf_text_content: str, topic: str, number: str) -> str:

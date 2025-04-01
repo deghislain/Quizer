@@ -2,11 +2,11 @@ string_questions = """
  [
         {
             "question": "What are large language models?",
-            "answers": {
-                "A": "responseA",
-                "B": "responseB",
-                "C": "responseC"
-            },
+            "answers": [
+                "A) responseA",
+                "B) responseB",
+                "C) responseC"
+            ],
             "solution": "A"
         }
 ]
