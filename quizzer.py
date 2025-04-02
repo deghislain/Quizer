@@ -3,7 +3,7 @@ from quiz_document_helper import load_document
 from langchain_openai import ChatOpenAI
 from quz_prompt import get_prompt
 from langchain.schema import HumanMessage
-from quiz_helper import create_test
+from quiz_helper import create_test, start_test
 import logging
 import time
 
@@ -48,15 +48,24 @@ def generate_questions(pdf_text_content: str, topic: str, number: str) -> str:
 
 
 if __name__ == "__main__":
-    pdf_text_content = load_document()
+    pdf_text_content = None
+    if "doc_status" not in st.session_state:
+        pdf_text_content = load_document()
+
     if pdf_text_content:
         topic = st.text_input(":blue[Enter a topic:]", placeholder="eg AI")
         number = st.text_input(":blue[Enter the number of question per test:]", placeholder="eg 5")
         btn_submit = st.button("Submit")
         if btn_submit and topic and number:
             question_json = generate_questions(pdf_text_content, topic, str(number))
+            st.session_state["doc_status"] = "parsed"
             if question_json:
                 logging.info(f"Generated question: {question_json}")
                 test = create_test(question_json)
                 logging.info("Test successfully created")
-            st.write(question_json)
+                st.session_state.my_instance = test
+                start_test(test)
+            #st.write(question_json)
+    elif "doc_status" in st.session_state and st.session_state["doc_status"] == "parsed":
+        logging.info("Running test from session")
+        start_test()

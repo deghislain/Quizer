@@ -29,8 +29,8 @@ class TestProcessTestCreation(unittest.TestCase):
     def test_generate_questions_correct_json_questions(self):
         list_questions = []
         test = Test(string_questions)
-        answer = Answer(choice_one='A) responseA', choice_two='B) responseB', choice_three='C) responseC', solution='B')
-        question = Question(answers=answer, question='What are large language models?')
+        answer = Answer(choice_one='A) responseA', choice_two='B) responseB', choice_three='C) responseC')
+        question = Question(answers=answer, question='What are large language models?', solution='B')
 
         list_questions.append(question)
 
@@ -57,8 +57,8 @@ class TestProcessTestCreation(unittest.TestCase):
     def test_create_test_correct_input(self):
         list_questions = []
         test = Test(string_questions)
-        answer = Answer(choice_one='A) responseA', choice_two='B) responseB', choice_three='C) responseC', solution='B')
-        question = Question(answers=answer, question='What are large language models?')
+        answer = Answer(choice_one='A) responseA', choice_two='B) responseB', choice_three='C) responseC')
+        question = Question(answers=answer, question='What are large language models?', solution='B')
 
         list_questions.append(question)
 
