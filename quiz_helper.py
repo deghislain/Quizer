@@ -113,10 +113,11 @@ def start_test(test=None):
     if test:
         logging.info(f"In start_test*****************************test from session {test}")
         index = test.current_question_index
-        current_question = test.test_questions[index]
-        user_answer = test.get_user_answer(current_question)
-        test.current_question_index = index + 1
-        if user_answer == current_question.solution:
-            test.score += 5
+        if index < len(test.test_questions):
+            current_question = test.test_questions[index]
+            user_answer = test.get_user_answer(current_question)
+            test.current_question_index = index + 1
+            if user_answer == current_question.solution:
+                test.score += 5
         st.session_state.my_instance = test
 
